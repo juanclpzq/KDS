@@ -1,18 +1,7 @@
 import { KitchenDisplay } from './screens/KitchenDisplay';
-import { DemoPanel } from './demo/DemoPanel';
 
-/**
- * Main App Component
- */
 function App() {
-  const isDevelopment = import.meta.env.DEV;
-
-  return (
-    <>
-      <KitchenDisplay />
-      {isDevelopment && <DemoPanel />}
-    </>
-  );
+  return <KitchenDisplay />;
 }
 
 export default App;

@@ -1,54 +1,42 @@
-/**
- * Order Status
- * Represents the lifecycle of an order in the kitchen
- */
-export type OrderStatus = 'PAID' | 'IN_PROGRESS' | 'READY' | 'CANCELED';
+export type OrderStatus = 'pending' | 'paid' | 'in_progress' | 'ready' | 'completed' | 'cancelled';
 
-/**
- * Order Item Modifier
- * Represents customizations to an item (e.g., "no sugar", "extra shot")
- */
-export interface ItemModifier {
-  id: string;
-  text: string;
+export interface OrderItemModifier {
+  name: string;
+  quantity: number;
 }
 
-/**
- * Order Item
- * Individual item in an order
- */
+export interface OrderItemExtra {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+export interface OrderItemException {
+  name: string;
+}
+
 export interface OrderItem {
   id: string;
   name: string;
   quantity: number;
-  modifiers: ItemModifier[];
-  notes?: string;
+  notes: string | null;
+  modifiers: OrderItemModifier[];
+  extras: OrderItemExtra[];
+  exceptions: OrderItemException[];
 }
 
-/**
- * Order
- * Complete order representation
- */
 export interface Order {
   id: string;
-  displayId: number;          // Human-readable ID (e.g., 42)
+  public_id: string | null;
+  order_number: number;
+  device_id: number | null;
   status: OrderStatus;
+  status_label: string;
+  order_type: string | null;
+  customer_name: string | null;
+  note: string | null;
+  created_at: string;
+  started_at: string | null;
+  elapsed_minutes: number;
   items: OrderItem[];
-  createdAt: number;          // Timestamp when order was paid
-  startedAt?: number;         // Timestamp when prep started
-  completedAt?: number;       // Timestamp when marked ready
-  canceledAt?: number;        // Timestamp when canceled
-  customerName?: string;      // Optional customer name
-  notes?: string;             // Order-level notes
-}
-
-/**
- * Derived order state
- * Computed at runtime
- */
-export interface OrderDisplayState {
-  order: Order;
-  isLate: boolean;
-  elapsedTime: number;        // Seconds since creation
-  preparationTime?: number;   // Seconds in preparation
 }
